@@ -20,7 +20,7 @@ return new class extends Migration
                 'inactivo',
             ])->default('activo');  
             $table->foreignId('cargo_id')
-                ->constrained()
+                ->constrained('cargos')
                 ->onDelete('cascade');
             $table->timestamps();
         });

@@ -26,7 +26,7 @@ return new class extends Migration
                 'despedido',
             ])->default('activo');
             $table->foreignId('cargo_id')
-            ->constrained()
+            ->constrained('cargos')
             ->onDelete('cascade');
             $table->timestamps();
         });
