@@ -30,7 +30,25 @@ class EmpleadosController extends Controller
     public function store(Request $request)
     {
         //
-        $empleado = Empleados::create($request->all());
+        $datos = $request->validate([
+        'nombre' => 'required|string|max:255',
+        'apellido' => 'required|string|max:255',
+        'fecha_nacimiento' => 'required|date',
+        'fecha_ingreso' => 'required|date',
+        'salario' => 'required|numeric',
+        'estado' => 'required|string',
+        'cargo_id' => 'required|exists:cargos,id',
+    ], [
+        'nombre.required' => 'El nombre es obligatorio',
+        'apellido.required' => 'El apellido es obligatorio',
+        'fecha_nacimiento.required' => 'La fecha de nacimiento es obligatoria',
+        'fecha_ingreso.required' => 'La fecha de ingreso es obligatoria',
+        'salario.required' => 'El salario es obligatorio',
+        'cargo_id.required' => 'El cargo es obligatorio',
+        'cargo_id.exists' => 'El cargo seleccionado no existe',
+    ]);
+
+    $empleado = Empleados::create($datos);
 
         return response()->json([
             'message' => 'Empleado creado',
