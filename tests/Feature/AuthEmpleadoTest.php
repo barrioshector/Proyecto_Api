@@ -15,15 +15,13 @@ class AuthEmpleadoTest extends TestCase
     use RefreshDatabase;
     /**
      * A basic feature test example.
-     */
-public function test_usuario_puede_registrarse()
-{
-    $response = $this->postJson('/api/register', [
-        'name' => 'Hector',
-        'email' => 'hector@test.com',
-        'password' => '123456'
+     */public function test_usuario_puede_registrarse()
+     {
+        $response = $this->postJson('/api/register', [
+            'name' => 'Hector',
+            'email' => 'hector@test.com',
+            'password' => '123456'
     ]);
-
     $response->assertStatus(200);
 
     $this->assertDatabaseHas('users', [
@@ -49,10 +47,10 @@ public function test_usuario_puede_registrarse()
                  ]);
     }
     public function test_usuario_autenticado_puede_crear_empleado()
-{
-    $user = User::factory()->create();
+    {
+        $user = User::factory()->create();
 
-    Sanctum::actingAs($user);
+        Sanctum::actingAs($user);
 
     $cargo = Cargos::create([
         'nombre_cargo' => 'Administrador'
