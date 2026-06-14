@@ -56,3 +56,111 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+/** 
+Documentación API RDS
+
+API REST desarrollada con Laravel 13 y Laravel Sanctum para la gestión de empleados.
+
+Características:
+
+Registro de usuarios.
+Inicio de sesión.
+Autenticación mediante Tokens de Sanctum.
+Gestión de empleados protegida por autenticación.
+
+primero en la terminal de Windows PowerShell
+
+entramos al Proyecto 
+
+cd "C:\Users\barri\Documents\ProyectoLaravelApi\rds-api"
+
+dentro del proyecto corremos el servidor 
+
+php artisan serve 
+
+Despues nos vamos a Git bash para hacer las peticiones pero primero debemos entrar al proyecto 
+
+$ cd /c/Users/barri/Documents/ProyectoLaravelApi/rds-api
+
+REGISTRAR UN USUARIO 
+
+EJEMPLO CURL 
+
+curl -X POST http://127.0.0.1:8000/api/register 
+-H "Content-Type: application/json" 
+-H "Accept: application/json" 
+-d "{"name":"Hector","email":"hector@gmail.com","password":"12345678"}"
+
+Respuesta Exitosa
+{
+    "message": "Usuario Creado"
+}
+
+INICIAR SECCION
+
+Autenticación
+
+La API utiliza Laravel Sanctum.
+
+Después de iniciar sesión, el usuario recibe un token.
+
+Ese token debe enviarse en cada petición protegida:
+
+EJEMPLO CURL INICIAR SECCION 
+
+curl -X POST http://127.0.0.1:8000/api/login 
+-H "Content-Type: application/json" 
+-H "Accept: application/json" 
+-d "{"email":"hector@gmail.com","password":"12345678"}"
+
+Respuesta Exitosa
+{
+    "token": "1|abcdef123456..."
+}
+
+Respuesta Incorrecta
+{
+    "message": "Credenciales incorrectas"
+}
+
+Endpoints Protegidos
+
+CREAR UN EMPLEADO 
+
+EJEMPLO CURL 
+
+curl -X POST http://127.0.0.1:8000/api/empleados 
+-H "Authorization: Bearer 1|abcdef123456... 
+-H "Content-Type: application/json" 
+-H "Accept: application/json" 
+-d "{
+  "nombre":"Juan","apellido":"Perez","fecha_nacimiento":"2000-01-01","fecha_ingreso":"2025-01-01","salario":2500000,"estado":"activo","cargo_id":1
+}"
+
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
