@@ -14,6 +14,10 @@ class EmpleadosController extends Controller
     public function index()
     {
         //
+        $empleados = Empleados::all();
+        return response()->json([
+            'data' => $empleados
+        ], 200);
     }
 
     /**
@@ -59,9 +63,16 @@ class EmpleadosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Empleados $empleados)
+    public function show($id)
     {
         //
+        $empleados = Empleados::find($id);
+        if(!$empleados){
+            return response()->json([
+                'message' => 'Empleado no encontrado'
+            ]);
+        }
+        Return response()->json($empleados, 200);
     }
 
     /**
@@ -116,7 +127,14 @@ class EmpleadosController extends Controller
     {
         //
         $empleados= Empleados::find($id);  
-        $empleados->delete();      
+        if(!$empleados){
+            return response()->json([
+                'message' => 'Empleado no encontrado'
+            ], 404);
+        }
+
+        $empleados->delete();  
+
         return response()->json([
             'message' => 'Empleado eliminado'
         ], 200);
