@@ -131,12 +131,30 @@ CREAR UN EMPLEADO
 EJEMPLO CURL 
 
 curl -X POST http://127.0.0.1:8000/api/empleados 
--H "Authorization: Bearer 1|abcdef123456... 
+-H "Authorization: Bearer 13|BqOjQ5kH3fzVGuT2Y1niC7FvjBD70IWCMKGbrFaJ841903be" 
 -H "Content-Type: application/json" 
 -H "Accept: application/json" 
 -d "{
   "nombre":"Juan","apellido":"Perez","fecha_nacimiento":"2000-01-01","fecha_ingreso":"2025-01-01","salario":2500000,"estado":"activo","cargo_id":1
 }"
+
+Respuesta Exitosa 
+{
+    "message": "Empleado creado"
+}
+
+EDITAR UN EMPLEADO
+
+curl -X PUT "http://127.0.0.1:8000/api/empleados/1" \
+-H "Authorization: Bearer 13|BqOjQ5kH3fzVGuT2Y1niC7FvjBD70IWCMKGbrFaJ841903be" \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-d '{"nombre":"Barrios","apellido":"Contreras","fecha_nacimiento":"1995-10-20","fecha_ingreso":"2024-01-15","salario":2500000,"estado":"Inactivo","cargo_id":3}'
+
+Respuesta Exitosa 
+{
+    {"message":"Empleado actualizado","data":{"id":1,"nombre":"Barrios","apellido":"Contreras","fecha_nacimiento":"1995-10-20","fecha_ingreso":"2024-01-15","salario":2500000,"estado":"Inactivo","cargo_id":3,"created_at":"2026-06-05T06:05:51.000000Z","updated_at":"2026-06-14T16:37:59.000000Z"}}
+}
 
  */
 
