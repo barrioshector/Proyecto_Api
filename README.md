@@ -1,58 +1,193 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+/** 
+Documentación API RDS
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+API REST desarrollada con Laravel 13 y Laravel Sanctum para la gestión de empleados.
 
-## About Laravel
+Características:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Registro de usuarios.
+Inicio de sesión.
+Autenticación mediante Tokens de Sanctum.
+Gestión de empleados protegida por autenticación.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+primero en la terminal de Windows PowerShell
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+entramos al Proyecto 
 
-## Learning Laravel
+cd "C:\Users\barri\Documents\ProyectoLaravelApi\rds-api"
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+dentro del proyecto corremos el servidor 
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+php artisan serve 
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+Despues nos vamos a Git bash para hacer las peticiones pero primero debemos entrar al proyecto 
 
-## Agentic Development
+$ cd /c/Users/barri/Documents/ProyectoLaravelApi/rds-api
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+REGISTRAR UN USUARIO 
 
-```bash
-composer require laravel/boost --dev
+EJEMPLO CURL 
 
-php artisan boost:install
-```
+curl -X POST "http://127.0.0.1:8000/api/register" \
+-H "Content-Type: application/json" \
+-H "Accept: application/json" \
+-d "{"name":"Hector","email":"hector@gmail.com","password":"12345678"}"
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Respuesta Exitosa
+{
+    "message": "Usuario Creado"
+}
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+INICIAR SECCION
 
-## Code of Conduct
+Autenticación
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+La API utiliza Laravel Sanctum.
 
-## Security Vulnerabilities
+Después de iniciar sesión, el usuario recibe un token.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Ese token debe enviarse en cada petición protegida:
 
-## License
+EJEMPLO CURL INICIAR SECCION 
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+curl -X POST "http://127.0.0.1:8000/api/login" \
+-H "Content-Type: application/json" \
+-H "Accept: application/json" \
+-d '{"email":"hector@gmail.com","password":"12345678"}'
+
+Respuesta Exitosa
+{
+    "token": "1|abcdef123456..."
+}
+
+Respuesta Incorrecta
+{
+    "message": "Credenciales incorrectas"
+}
+
+Endpoints Protegidos
+
+CREAR UN EMPLEADO 
+
+EJEMPLO CURL 
+
+curl -X POST "http://127.0.0.1:8000/api/empleados" \
+-H "Authorization: Bearer 13|BqOjQ5kH3fzVGuT2Y1niC7FvjBD70IWCMKGbrFaJ841903be" \
+-H "Content-Type: application/json" \
+-H "Accept: application/json" \
+-d '{
+  "nombre":"Juan","apellido":"Perez","fecha_nacimiento":"2000-01-01","fecha_ingreso":"2025-01-01","salario":2500000,"estado":"activo","cargo_id":1
+}'
+
+Respuesta Exitosa 
+{
+    "message": "Empleado creado"
+}
+
+Respuesta Incorrceta
+{
+    "message": 'nombre.required' => 'El nombre es obligatorio',
+        'apellido.required' => 'El apellido es obligatorio',
+        'fecha_nacimiento.required' => 'La fecha de nacimiento es obligatoria',
+        'fecha_ingreso.required' => 'La fecha de ingreso es obligatoria',
+        'salario.required' => 'El salario es obligatorio',
+        'cargo_id.required' => 'El cargo es obligatorio',
+        'cargo_id.exists' => 'El cargo seleccionado no existe',
+}
+
+MOSTRAR EMPLEADOS 
+
+EJEMPLO CURL 
+  curl -X GET "http://127.0.0.1:8000/api/empleados" \
+-H "Authorization: Bearer 13|BqOjQ5kH3fzVGuT2Y1niC7FvjBD70IWCMKGbrFaJ841903be" \
+-H "Accept: application/json"
+
+Respuesta Exitosa 
+{
+    "data":[{"id":1,"nombre":"Barrios","apellido":"Contreras","fecha_nacimiento":"1995-10-20","fecha_ingreso":"2024-01-15","salario":2500000,"estado":"inactivo","cargo_id":3,"created_at":"2026-06-05T06:05:51.000000Z","updated_at":"2026-06-14T16:37:59.000000Z"},{"id":4,"nombre":"Carlos","apellido":"Ramirez","fecha_nacimiento":"1995-04-20","fecha_ingreso":"2026-06-09","salario":2500000,"estado":"activo","cargo_id":1,"created_at":"2026-06-09T21:18:34.000000Z","updated_at":"2026-06-09T21:18:34.000000Z"}]
+}
+
+MOSTRAR EMPLEADOS POR ID
+
+EJEMPLO CURL 
+
+curl -X GET "http://127.0.0.1:8000/api/empleados/1" \
+-H "Authorization: Bearer 13|BqOjQ5kH3fzVGuT2Y1niC7FvjBD70IWCMKGbrFaJ841903be" \
+-H "Accept: application/json"
+
+Respuesta Exitosa
+{
+    {"id":1,"nombre":"Barrios","apellido":"Contreras","fecha_nacimiento":"1995-10-20","fecha_ingreso":"2024-01-15","salario":2500000,"estado":"inactivo","cargo_id":3,"created_at":"2026-06-05T06:05:51.000000Z","updated_at":"2026-06-14T16:37:59.000000Z"}
+}
+
+Respuesta Incorrecta 
+{
+    "message": "Empleado no encontrado"
+}
+
+
+EDITAR UN EMPLEADO
+
+EJEMPLO CURL
+
+curl -X PUT "http://127.0.0.1:8000/api/empleados/1" \
+-H "Authorization: Bearer 13|BqOjQ5kH3fzVGuT2Y1niC7FvjBD70IWCMKGbrFaJ841903be" \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-d '{"nombre":"Barrios","apellido":"Contreras","fecha_nacimiento":"1995-10-20","fecha_ingreso":"2024-01-15","salario":2500000,"estado":"Inactivo","cargo_id":3}'
+
+Respuesta Exitosa 
+{
+    {"message":"Empleado actualizado","data":{"id":1,"nombre":"Barrios","apellido":"Contreras","fecha_nacimiento":"1995-10-20","fecha_ingreso":"2024-01-15","salario":2500000,"estado":"Inactivo","cargo_id":3,"created_at":"2026-06-05T06:05:51.000000Z","updated_at":"2026-06-14T16:37:59.000000Z"}}
+}
+
+Respuesta Incorrecta 
+{
+    "message": "Empleado no encontrado"
+}
+
+
+ELIMINAR UN EMPLEADO 
+
+EJEMPLO CURL 
+
+curl -X DELETE "http://127.0.0.1:8000/api/empleados/1" \
+-H "Authorization: Bearer 13|BqOjQ5kH3fzVGuT2Y1niC7FvjBD70IWCMKGbrFaJ841903be" \  
+-H "Accept: application/json"
+
+Respuesta Exitosa 
+{
+   "message": "Empleado eliminado" 
+}
+
+Respuesta Incorrecta 
+{
+   "message": "Empleado no encontrado" 
+}
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
