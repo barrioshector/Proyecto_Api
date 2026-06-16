@@ -14,6 +14,6 @@ class CargoSeeder extends Seeder
      */
     public function run(): void
     {
-        Cargos::factory()->count(10)->create();
+        Cargos::factory()->count(30)->create();
     }
 }
