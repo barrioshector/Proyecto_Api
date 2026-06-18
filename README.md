@@ -211,7 +211,7 @@ Reemplaza TU_TOKEN_AQUI por el token recibido al iniciar sesion.
 CREAR UN EMPLEADO  
 
 curl -X POST "http://127.0.0.1:8000/api/empleados" \
--H "Authorization: Bearer 13|BqOjQ5kH3fzVGuT2Y1niC7FvjBD70IWCMKGbrFaJ841903be" \
+-H "Authorization: Bearer TU_TOKEN_AQUI" \
 -H "Content-Type: application/json" \
 -H "Accept: application/json" \
 -d '{
@@ -237,7 +237,7 @@ Respuesta Incorrceta
 MOSTRAR EMPLEADOS 
 
 curl -X GET "http://127.0.0.1:8000/api/empleados" \
--H "Authorization: Bearer 13|BqOjQ5kH3fzVGuT2Y1niC7FvjBD70IWCMKGbrFaJ841903be" \
+-H "Authorization: Bearer TU_TOKEN_AQUI" \
 -H "Accept: application/json"
 
 Respuesta Exitosa 
@@ -249,7 +249,7 @@ Respuesta Exitosa
 MOSTRAR EMPLEADOS POR ID
  
 curl -X GET "http://127.0.0.1:8000/api/empleados/10" \
--H "Authorization: Bearer 13|BqOjQ5kH3fzVGuT2Y1niC7FvjBD70IWCMKGbrFaJ841903be" \
+-H "Authorization: Bearer TU_TOKEN_AQUI" \
 -H "Accept: application/json"
 
 Respuesta Exitosa
@@ -266,7 +266,7 @@ Respuesta Incorrecta
 EDITAR UN EMPLEADO
 
 curl -X PUT "http://127.0.0.1:8000/api/empleados/10" \
--H "Authorization: Bearer 13|BqOjQ5kH3fzVGuT2Y1niC7FvjBD70IWCMKGbrFaJ841903be" \
+-H "Authorization: Bearer TU_TOKEN_AQUI" \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \
 -d '{"nombre":"Barrios","apellido":"Contreras","fecha_nacimiento":"1995-10-20","fecha_ingreso":"2024-01-15","salario":2500000,"estado":"Inactivo","cargo_id":3}'
@@ -285,7 +285,7 @@ ELIMINAR UN EMPLEADO
  
 
 curl -X DELETE "http://127.0.0.1:8000/api/empleados/6" \
--H "Authorization: Bearer 13|BqOjQ5kH3fzVGuT2Y1niC7FvjBD70IWCMKGbrFaJ841903be" \
+-H "Authorization: Bearer TU_TOKEN_AQUI" \
 -H "Accept: application/json"
 
 Respuesta Exitosa 
@@ -302,7 +302,7 @@ Respuesta Incorrecta
 CRAER UN CARGO 
 
 curl -X POST http://127.0.0.1:8000/api/cargos \
--H "Authorization: Bearer 16|w6TYFcd8e22DP32xLFqnGU6pC7CsJd2vgs3v8vCef89f4bcf" \
+-H "Authorization: Bearer TU_TOKEN_AQUI" \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \
 -d '{
@@ -320,14 +320,14 @@ Respuesta exitosa
 MOSTRAR CARGOS 
 
 curl -X GET http://127.0.0.1:8000/api/cargos \
--H "Authorization: Bearer 16|w6TYFcd8e22DP32xLFqnGU6pC7CsJd2vgs3v8vCef89f4bcf" \
+-H "Authorization: Bearer TU_TOKEN_AQUI" \
 -H "Accept: application/json"
 
 
 MOSTRAR CARGOS POR ID 
 
 curl -X GET http://127.0.0.1:8000/api/cargos/41 \
--H "Authorization: Bearer 16|w6TYFcd8e22DP32xLFqnGU6pC7CsJd2vgs3v8vCef89f4bcf" \
+-H "Authorization: Bearer TU_TOKEN_AQUI" \
 -H "Accept: application/json"
 
 Respuesta Exitosa
@@ -346,7 +346,7 @@ Respuesta Incorrecta
 EDITAR UN CARGO 
 
 curl -X PUT http://127.0.0.1:8000/api/cargos/41 \
--H "Authorization: Bearer 16|w6TYFcd8e22DP32xLFqnGU6pC7CsJd2vgs3v8vCef89f4bcf" \
+-H "Authorization: Bearer TU_TOKEN_AQUI" \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \
 -d '{
@@ -371,7 +371,7 @@ Respuesta Incorrecta
 ELIMINAR UN CARGO 
 
 curl -X DELETE http://127.0.0.1:8000/api/cargos/41 \
--H "Authorization: Bearer 16|w6TYFcd8e22DP32xLFqnGU6pC7CsJd2vgs3v8vCef89f4bcf" \
+-H "Authorization: Bearer TU_TOKEN_AQUI" \
 -H "Accept: application/json"
 
 
@@ -387,6 +387,64 @@ Respuesta Incorrecta
     "message": "Cargo no encontrado"
 }
 
+CRAER FUNCIONES_CARGOS
 
+curl -X POST http://127.0.0.1:8000/api/funcionescargos \                                                     -H "Authorization: Bearer TU_TOKEN_AQUI" \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-d '{
+    "descripcion_funcion":"Desarrollar APIs REST",
+    "estado":"activo",
+    "cargo_id":40
+}'
+
+{
+    "message":"Funcio\u0301n de cargo creada","data":{"descripcion_funcion":"Desarrollar APIs REST","estado":"activo","cargo_id":40,"updated_at":"2026-06-18T15:18:20.000000Z","created_at":"2026-06-18T15:18:20.000000Z","id":201}
+}
+
+MOSTRAR FUNCIONES_CARGOS
+
+curl -X GET http://127.0.0.1:8000/api/funcionescargos \
+-H "Authorization: Bearer TU_TOKEN_AQUI" \
+-H "Accept: application/json"
+
+
+MOSTRAR FUNCIONES_CARGOS POR ID
+
+curl -X GET http://127.0.0.1:8000/api/funcionescargos/201 \
+-H "Authorization: Bearer TU_TOKEN_AQUI" \
+-H "Accept: application/json"
+
+
+Respuesta Exitosa 
+
+{
+    "id":201,"descripcion_funcion":"Desarrollar APIs REST","estado":"activo","cargo_id":40,"created_at":"2026-06-18T15:18:20.000000Z","updated_at":"2026-06-18T15:18:20.000000Z","cargo":{"id":40,"nombre_cargo":"HR Specialist","descripcion":"Aut ducimus aperiam nihil impedit doloribus aliquam ex.","created_at":"2026-06-16T20:16:16.000000Z","updated_at":"2026-06-16T20:16:16.000000Z"}
+}
+
+
+Respuesta Incorrecta 
+
+{
+    "message": "Función de cargo no encontrada"
+}
+
+ELIMINAR FUNCIONES_CARGOS 
+
+curl -X DELETE http://127.0.0.1:8000/api/funcionescargos/201 \
+-H "Authorization: Bearer TU_TOKEN_AQUI" \
+-H "Accept: application/json"
+
+Respuesta Exitosa 
+
+{
+    "message":"Funcio\u0301n de cargo eliminada"
+}
+
+Rspuesta Incorrecta 
+
+{
+    "message": "Función de cargo no encontrada"
+}
 
 
