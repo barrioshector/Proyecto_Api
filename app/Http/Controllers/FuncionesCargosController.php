@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FuncionesCargos;
+use App\Models\Cargos;
 use Illuminate\Http\Request;
 
 class FuncionesCargosController extends Controller
@@ -13,6 +14,10 @@ class FuncionesCargosController extends Controller
     public function index()
     {
         //
+        $funcionesCargos = FuncionesCargos::with('cargo')->get();
+        return response()->json([
+            'data' => $funcionesCargos
+        ], 200);
     }
 
     /**
@@ -29,14 +34,35 @@ class FuncionesCargosController extends Controller
     public function store(Request $request)
     {
         //
+        $datos = $request->validate([
+            'descripcion_funcion' => 'required|string|max:255',
+            'estado' => 'required|in:activo,inactivo',
+            'cargo_id' => 'required|exists:cargos,id',
+        ],[
+            'cargo_id.required' => 'El cargo es obligatorio',
+            'cargo_id.exists' => 'El cargo seleccionado no existe',
+        ]);
+
+        $funcionCargo = FuncionesCargos::create($datos);
+        return response()->json([
+            'message' => 'Función de cargo creada',
+            'data' => $funcionCargo
+        ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(FuncionesCargos $funcionesCargos)
+    public function show($id)
     {
         //
+        $funcionesCargos = FuncionesCargos::with('cargo')->find($id);
+        if(!$funcionesCargos){
+            return response()->json([
+                'message' => 'Función de cargo no encontrada'
+            ], 404);
+        }
+        Return response()->json($funcionesCargos, 200);
     }
 
     /**
@@ -58,8 +84,20 @@ class FuncionesCargosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(FuncionesCargos $funcionesCargos)
+    public function destroy($id)
     {
         //
+        $funcionesCargos= FuncionesCargos::find($id);  
+        if(!$funcionesCargos){
+            return response()->json([
+                'message' => 'Función de cargo no encontrada'
+            ], 404);
+        }
+
+        $funcionesCargos->delete();  
+
+        return response()->json([
+            'message' => 'Función de cargo eliminada'
+        ], 200);
     }
 }

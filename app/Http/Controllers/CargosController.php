@@ -13,6 +13,10 @@ class CargosController extends Controller
     public function index()
     {
         //
+        $cargos = Cargos::all();
+        return response()->json([
+            'data' => $cargos
+        ], 200);
     }
 
     /**
@@ -29,14 +33,35 @@ class CargosController extends Controller
     public function store(Request $request)
     {
         //
+        $datos = $request->validate([
+            'nombre_cargo' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:255',
+        ], [
+            'nombre_cargo.required' => 'El nombre del cargo es obligatorio',
+            
+        ]);
+
+        
+        $cargos = Cargos::create($datos);
+        return response() ->json([
+            'message' => 'Cargo creado correctamente',
+            'data' => $cargos
+        ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Cargos $cargos)
+    public function show($id)
     {
         //
+        $cargos = Cargos::find($id);
+        if(!$cargos){
+            return response()->json([
+                'message' => 'Cargo no encontrado'
+            ], 404);
+        }
+        Return response()->json($cargos, 200);
     }
 
     /**
@@ -50,16 +75,45 @@ class CargosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cargos $cargos)
+    public function update(Request $request, $id)
     {
         //
+        $cargos = Cargos::find($id); 
+        if(!$cargos){
+            return response() ->json([
+                'message' => 'Cargo no encontrado'
+            ], 404);
+        }
+        $datos = $request->validate([
+            'nombre_cargo' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:255',
+        ], [
+            'nombre_cargo.required' => 'El nombre del cargo es obligatorio',
+        ]);
+        $cargos->update($datos);
+        if($cargos){
+            return response()->json([
+                'message' => 'Cargo actualizado',
+                'data' => $cargos
+            ], 200);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cargos $cargos)
+    public function destroy($id)
     {
         //
+        $cargos = Cargos::find($id);
+        if(!$cargos){
+            return response()->json([
+                'message' => 'Cargo no encontrado'
+            ], 404);
+        }
+        $cargos->delete();
+        return response()->json([
+            'message' => 'Cargo eliminado'
+        ], 200);
     }
 }
