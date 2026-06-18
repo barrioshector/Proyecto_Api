@@ -161,7 +161,7 @@ Usa este endpoint si el usuario todavia no existe.
 curl -X POST "http://127.0.0.1:8000/api/register" \
 -H "Content-Type: application/json" \
 -H "Accept: application/json" \
--d '{"name":"Hector","email":"hectorBc@gmail.com","password":"123456"}'
+-d '{"name":"Hector","email":"hector@gmail.com","password":"123456"}'
 
 Respuesta Exitosa
 {
@@ -175,7 +175,7 @@ Usa este endpoint si el usuario ya existe.
 curl -X POST "http://127.0.0.1:8000/api/login" \
 -H "Content-Type: application/json" \
 -H "Accept: application/json" \
--d '{"email":"hectorBc@gmail.com","password":"123456"}'
+-d '{"email":"hector@gmail.com","password":"123456"}'
 
 Respuesta Exitosa
 {
@@ -233,7 +233,6 @@ Respuesta Incorrceta
         'cargo_id.required' => 'El cargo es obligatorio',
         'cargo_id.exists' => 'El cargo seleccionado no existe',
 }
-
 
 MOSTRAR EMPLEADOS 
 
@@ -298,3 +297,96 @@ Respuesta Incorrecta
 {
    "message": "Empleado no encontrado" 
 }
+
+
+CRAER UN CARGO 
+
+curl -X POST http://127.0.0.1:8000/api/cargos \
+-H "Authorization: Bearer 16|w6TYFcd8e22DP32xLFqnGU6pC7CsJd2vgs3v8vCef89f4bcf" \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-d '{
+    "nombre_cargo":"Desarrollador Backend",
+    "descripcion":"Encargado del desarrollo de APIs"
+}'
+
+Respuesta exitosa
+
+{
+    "message":"Cargo creado correctamente","data":{"nombre_cargo":"Desarrollador Backend","descripcion":"Encargado del desarrollo de APIs","updated_at":"2026-06-18T14:05:59.000000Z","created_at":"2026-06-18T14:05:59.000000Z","id":41}
+}
+
+
+MOSTRAR CARGOS 
+
+curl -X GET http://127.0.0.1:8000/api/cargos \
+-H "Authorization: Bearer 16|w6TYFcd8e22DP32xLFqnGU6pC7CsJd2vgs3v8vCef89f4bcf" \
+-H "Accept: application/json"
+
+
+MOSTRAR CARGOS POR ID 
+
+curl -X GET http://127.0.0.1:8000/api/cargos/41 \
+-H "Authorization: Bearer 16|w6TYFcd8e22DP32xLFqnGU6pC7CsJd2vgs3v8vCef89f4bcf" \
+-H "Accept: application/json"
+
+Respuesta Exitosa
+
+{
+    "id":41,"nombre_cargo":"Desarrollador Backend","descripcion":"Encargado del desarrollo de APIs","created_at":"2026-06-18T14:05:59.000000Z","updated_at":"2026-06-18T14:05:59.000000Z"
+}
+
+Respuesta Incorrecta 
+
+{
+    "message": "Cargo no encontrdao"
+}
+
+
+EDITAR UN CARGO 
+
+curl -X PUT http://127.0.0.1:8000/api/cargos/41 \
+-H "Authorization: Bearer 16|w6TYFcd8e22DP32xLFqnGU6pC7CsJd2vgs3v8vCef89f4bcf" \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-d '{
+    "nombre_cargo":"Senior Backend",
+    "descripcion":"Desarrollador Backend Senior"
+}'
+
+
+Respuesta Exitosa 
+
+{
+    "message":"Cargo actualizado","data":{"id":41,"nombre_cargo":"Senior Backend","descripcion":"Desarrollador Backend Senior","created_at":"2026-06-18T14:05:59.000000Z","updated_at":"2026-06-18T14:28:22.000000Z"}
+}
+
+Respuesta Incorrecta 
+
+{
+    "message": "Cargo no encontrado"
+}
+
+
+ELIMINAR UN CARGO 
+
+curl -X DELETE http://127.0.0.1:8000/api/cargos/41 \
+-H "Authorization: Bearer 16|w6TYFcd8e22DP32xLFqnGU6pC7CsJd2vgs3v8vCef89f4bcf" \
+-H "Accept: application/json"
+
+
+Respuesta Exitosa 
+
+{
+    "message":"Cargo eliminado"
+}
+
+Respuesta Incorrecta
+
+{
+    "message": "Cargo no encontrado"
+}
+
+
+
+
