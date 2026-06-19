@@ -14,10 +14,8 @@ class FuncionesCargosController extends Controller
     public function index()
     {
         //
-        $funcionesCargos = FuncionesCargos::with('cargo')->get();
-        return response()->json([
-            'data' => $funcionesCargos
-        ], 200);
+        $funcionesCargos = FuncionesCargos::with('cargo')->paginate(10);
+        return response()->json($funcionesCargos->items(), 200);
     }
 
     /**
