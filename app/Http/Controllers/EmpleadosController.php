@@ -14,10 +14,8 @@ class EmpleadosController extends Controller
     public function index()
     {
         //
-        $empleados = Empleados::all();
-        return response()->json([
-            'data' => $empleados
-        ], 200);
+        $empleados = Empleados::with('cargo')->paginate(10);
+        return response()->json($empleados ->items(), 200);
     }
 
     /**

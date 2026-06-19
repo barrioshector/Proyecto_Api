@@ -273,10 +273,10 @@ curl -X POST "http://127.0.0.1:8000/api/empleados" \
 
 ## Mostrar empleados
 
-**GET** `/api/empleados`
+**GET** `/api/empleados?page=1, 2, 3`
 
 ```bash
-curl -X GET "http://127.0.0.1:8000/api/empleados" \
+curl -X GET "http://127.0.0.1:8000/api/empleados?page=1" \
 -H "Authorization: Bearer TU_TOKEN_AQUI" \
 -H "Accept: application/json"
 ```
