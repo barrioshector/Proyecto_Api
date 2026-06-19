@@ -172,7 +172,7 @@ Para consumir los endpoints protegidos primero debes obtener un token.
 curl -X POST "http://127.0.0.1:8000/api/register" \
 -H "Content-Type: application/json" \
 -H "Accept: application/json" \
--d '{"name":"Hector","email":"hector@gmail.com","password":"123456"}'
+-d '{"name":"Hector","email":"hector@gmail.com","password":"12345678"}'
 ```
 
 ### Respuesta exitosa
@@ -193,7 +193,7 @@ curl -X POST "http://127.0.0.1:8000/api/register" \
 curl -X POST "http://127.0.0.1:8000/api/login" \
 -H "Content-Type: application/json" \
 -H "Accept: application/json" \
--d '{"email":"hector@gmail.com","password":"123456"}'
+-d '{"email":"hector@gmail.com","password":"12345678"}'
 ```
 
 ### Respuesta exitosa
@@ -373,7 +373,7 @@ curl -X GET "http://127.0.0.1:8000/api/cargos/41" \
 **PUT** `/api/cargos/{id}`
 
 ---
-curl -X PUT "http://127.0.0.1:8000/api/cargos/10" \
+curl -X PUT "http://127.0.0.1:8000/api/cargos/41" \
 -H "Authorization: Bearer TU_TOKEN_AQUI" \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \
@@ -385,7 +385,7 @@ curl -X PUT "http://127.0.0.1:8000/api/cargos/10" \
 **DELETE** `/api/cargos/{id}`
 
 ---
-curl -X DELETE "http://127.0.0.1:8000/api/cargos/10" \
+curl -X DELETE "http://127.0.0.1:8000/api/cargos/41" \
 -H "Authorization: Bearer TU_TOKEN_AQUI" \
 -H "Accept: application/json"
 
@@ -419,7 +419,7 @@ curl -X GET "http://127.0.0.1:8000/api/funcionescargos" \
 
 **GET** `/api/funcionescargos/{id}`
 ---
-curl -X GET "http://127.0.0.1:8000/api/funcionescargos/200" \
+curl -X GET "http://127.0.0.1:8000/api/funcionescargos/201" \
 -H "Authorization: Bearer TU_TOKEN_AQUI" \
 -H "Accept: application/json"
 
@@ -428,7 +428,7 @@ curl -X GET "http://127.0.0.1:8000/api/funcionescargos/200" \
 
 **DELETE** `/api/funcionescargos/{id}`
 ---
-curl -X DELETE "http://127.0.0.1:8000/api/funcionescargos/200" \
+curl -X DELETE "http://127.0.0.1:8000/api/funcionescargos/201" \
 -H "Authorization: Bearer TU_TOKEN_AQUI" \
 -H "Accept: application/json"
 # 🧪 Pruebas
