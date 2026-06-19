@@ -350,10 +350,10 @@ curl -X POST "http://127.0.0.1:8000/api/cargos" \
 
 ## Mostrar cargos
 
-**GET** `/api/cargos`
+**GET** `/api/cargos?page=1, 2, 3, 4`
 
 ```bash
-curl -X GET "http://127.0.0.1:8000/api/cargos" \
+curl -X GET "http://127.0.0.1:8000/api/cargos?page=1" \
 -H "Authorization: Bearer TU_TOKEN_AQUI" \
 -H "Accept: application/json"
 
