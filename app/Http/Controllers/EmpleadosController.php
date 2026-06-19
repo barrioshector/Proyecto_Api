@@ -14,10 +14,8 @@ class EmpleadosController extends Controller
     public function index()
     {
         //
-        $empleados = Empleados::all();
-        return response()->json([
-            'data' => $empleados
-        ], 200);
+        $empleados = Empleados::with('cargo')->paginate(10);
+        return response()->json($empleados ->items(), 200);
     }
 
     /**
@@ -66,7 +64,7 @@ class EmpleadosController extends Controller
     public function show($id)
     {
         //
-        $empleados = Empleados::find($id);
+        $empleados = Empleados::with('cargo')->find($id);
         if(!$empleados){
             return response()->json([
                 'message' => 'Empleado no encontrado'

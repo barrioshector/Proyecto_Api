@@ -13,10 +13,8 @@ class CargosController extends Controller
     public function index()
     {
         //
-        $cargos = Cargos::all();
-        return response()->json([
-            'data' => $cargos
-        ], 200);
+        $cargos = Cargos::paginate(10);
+        return response()->json($cargos->items(), 200);
     }
 
     /**
@@ -55,7 +53,7 @@ class CargosController extends Controller
     public function show($id)
     {
         //
-        $cargos = Cargos::find($id);
+        $cargos = Cargos::with('funcionesCargos')->find($id);
         if(!$cargos){
             return response()->json([
                 'message' => 'Cargo no encontrado'

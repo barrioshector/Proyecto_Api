@@ -22,8 +22,7 @@ return new class extends Migration
             [
                 'activo',
                 'inactivo',
-                'suspendido',
-                'despedido',
+                
             ])->default('activo');
             $table->foreignId('cargo_id')
             ->constrained('cargos')
