@@ -64,7 +64,7 @@ class EmpleadosController extends Controller
     public function show($id)
     {
         //
-        $empleados = Empleados::find($id);
+        $empleados = Empleados::with('cargo')->find($id);
         if(!$empleados){
             return response()->json([
                 'message' => 'Empleado no encontrado'
