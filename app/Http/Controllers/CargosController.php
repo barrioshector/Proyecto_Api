@@ -53,7 +53,7 @@ class CargosController extends Controller
     public function show($id)
     {
         //
-        $cargos = Cargos::find($id);
+        $cargos = Cargos::with('funcionesCargos')->find($id);
         if(!$cargos){
             return response()->json([
                 'message' => 'Cargo no encontrado'
